@@ -1,7 +1,14 @@
-Playing around with purescript-flare
+# flare-playground
 
-# Build and run it
+Me playing with purescript-flare library.
 
-spago bundle-app --main Main --to dist/app.js
-open dist/index.html
+## Build it locally
 
+```bash
+spago bundle-app --main Main --to docs/app.js
+```
+.. and then open docs/index.html in your browser
+
+## Play with it
+
+[here](https://jhrcek.github.io/flare-playground)
