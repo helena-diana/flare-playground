@@ -123,6 +123,37 @@ let upstream =
 
 let overrides = {=}
 
-let additions = {=}
+let additions =
+  { flare =
+      { dependencies =
+          [ "smolder"
+          , "foldable-traversable"
+          , "nonempty"
+          , "drawing"
+          , "canvas"
+          , "web-dom"
+          , "tuples"
+          , "signal"
+          , "datetime"
+          ]
+      , repo =
+          "https://github.com/sharkdp/purescript-flare.git"
+      , version =
+          "v5.0.0"
+      }
+  , drawing =
+      { dependencies =
+          [ "canvas"
+          , "lists"
+          , "math"
+          , "integers"
+          , "colors"
+          ]
+      , repo =
+          "https://github.com/paf31/purescript-drawing.git"
+      , version =
+          "v4.0.0"
+      }
+  }
 
 in  upstream // overrides // additions
