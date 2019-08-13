@@ -1,1 +1,1060 @@
-var PS={};!function(n){"use strict";n["Data.Boolean"]=n["Data.Boolean"]||{};n["Data.Boolean"].otherwise=!0}(PS),function(n){"use strict";n.fromNumberImpl=function(r){return function(t){return function(n){return(0|n)===n?r(n):t}}},n.toNumber=function(n){return n}}(PS["Data.Int"]=PS["Data.Int"]||{}),function(n){"use strict";n.topInt=2147483647,n.bottomInt=-2147483648}(PS["Data.Bounded"]=PS["Data.Bounded"]||{}),function(){"use strict";(PS["Data.Ord"]=PS["Data.Ord"]||{}).ordIntImpl=function(u){return function(e){return function(r){return function(t){return function(n){return t<n?u:t===n?e:r}}}}}}(),function(){"use strict";(PS["Data.Eq"]=PS["Data.Eq"]||{}).eqIntImpl=function(t){return function(n){return t===n}}}(),function(n){"use strict";n["Data.Eq"]=n["Data.Eq"]||{};var t=n["Data.Eq"],r=function(n){this.eq=n},e=new r(n["Data.Eq"].eqIntImpl);t.Eq=r,t.eq=function(n){return n.eq},t.eqInt=e}(PS),function(n){"use strict";n["Data.Ordering"]=n["Data.Ordering"]||{};var t=n["Data.Ordering"],r=function(){function n(){}return n.value=new n,n}(),e=function(){function n(){}return n.value=new n,n}(),u=function(){function n(){}return n.value=new n,n}();t.LT=r,t.GT=e,t.EQ=u}(PS),function(n){"use strict";n["Data.Ord"]=n["Data.Ord"]||{};var t=n["Data.Ord"],r=n["Data.Eq"],u=n["Data.Ordering"],e=function(n,t){this.Eq0=n,this.compare=t},i=new e(function(){return r.eqInt},n["Data.Ord"].ordIntImpl(u.LT.value)(u.EQ.value)(u.GT.value)),o=function(n){return n.compare},a=function(e){return function(r){return function(n){var t=o(e)(r)(n);if(t instanceof u.LT)return n;if(t instanceof u.EQ)return r;if(t instanceof u.GT)return r;throw Error("Failed pattern match at Data.Ord (line 167, column 3 - line 170, column 12): "+[t.constructor.name])}}},c=function(e){return function(r){return function(n){var t=o(e)(r)(n);if(t instanceof u.LT)return r;if(t instanceof u.EQ)return r;if(t instanceof u.GT)return n;throw Error("Failed pattern match at Data.Ord (line 158, column 3 - line 161, column 12): "+[t.constructor.name])}}};t.Ord=e,t.compare=o,t.min=c,t.max=a,t.clamp=function(e){return function(r){return function(t){return function(n){return c(e)(t)(a(e)(r)(n))}}}},t.ordInt=i}(PS),function(n){"use strict";n["Data.Bounded"]=n["Data.Bounded"]||{};var t=n["Data.Bounded"],r=n["Data.Bounded"],e=n["Data.Ord"],u=function(n,t,r){this.Ord0=n,this.bottom=t,this.top=r},i=new u(function(){return e.ordInt},r.bottomInt,r.topInt);t.Bounded=u,t.bottom=function(n){return n.bottom},t.top=function(n){return n.top},t.boundedInt=i}(PS),function(n){"use strict";n["Control.Alt"]=n["Control.Alt"]||{};var t=n["Control.Alt"];t.Alt=function(n,t){this.Functor0=n,this.alt=t},t.alt=function(n){return n.alt}}(PS),function(n){"use strict";n["Control.Semigroupoid"]=n["Control.Semigroupoid"]||{};var t=n["Control.Semigroupoid"],r=function(n){this.compose=n},e=new r(function(r){return function(t){return function(n){return r(t(n))}}});t.compose=function(n){return n.compose},t.Semigroupoid=r,t.semigroupoidFn=e}(PS),function(n){"use strict";n["Control.Category"]=n["Control.Category"]||{};var t=n["Control.Category"],r=n["Control.Semigroupoid"],e=function(n,t){this.Semigroupoid0=n,this.identity=t},u=new e(function(){return r.semigroupoidFn},function(n){return n});t.Category=e,t.identity=function(n){return n.identity},t.categoryFn=u}(PS),function(){"use strict";(PS["Data.Functor"]=PS["Data.Functor"]||{}).arrayMap=function(u){return function(n){for(var t=n.length,r=Array(t),e=0;e<t;e++)r[e]=u(n[e]);return r}}}(),function(n){"use strict";n["Data.Function"]=n["Data.Function"]||{};var t=n["Data.Function"];t.flip=function(r){return function(t){return function(n){return r(n)(t)}}},t.const=function(n){return function(){return n}}}(PS),function(){"use strict";(PS["Data.Unit"]=PS["Data.Unit"]||{}).unit={}}(),function(n){"use strict";n["Data.Unit"]=n["Data.Unit"]||{},n["Data.Unit"].unit=n["Data.Unit"].unit}(PS),function(n){"use strict";n["Data.Functor"]=n["Data.Functor"]||{};var t=n["Data.Functor"],r=n["Data.Function"],e=n["Data.Unit"],u=function(n){this.map=n},i=function(n){return n.map},o=new u(n["Data.Functor"].arrayMap);t.Functor=u,t.map=i,t.void=function(n){return i(n)(r.const(e.unit))},t.functorArray=o}(PS),function(n){"use strict";n["Data.Maybe"]=n["Data.Maybe"]||{};var t=n["Data.Maybe"],r=n["Control.Alt"],e=n["Control.Category"],u=n["Data.Functor"],i=function(){function n(){}return n.value=new n,n}(),o=function(){function t(n){this.value0=n}return t.create=function(n){return new t(n)},t}(),a=function(r){return function(t){return function(n){if(n instanceof i)return r;if(n instanceof o)return t(n.value0);throw Error("Failed pattern match at Data.Maybe (line 217, column 1 - line 217, column 51): "+[r.constructor.name,t.constructor.name,n.constructor.name])}}},c=new u.Functor(function(t){return function(n){return n instanceof o?new o(t(n.value0)):i.value}}),f=new r.Alt(function(){return c},function(t){return function(n){return t instanceof i?n:t}});t.Nothing=i,t.Just=o,t.maybe=a,t.fromMaybe=function(n){return a(n)(e.identity(e.categoryFn))},t.fromJust=function(){return function(n){if(n instanceof o)return n.value0;throw Error("Failed pattern match at Data.Maybe (line 268, column 1 - line 268, column 46): "+[n.constructor.name])}},t.functorMaybe=c,t.altMaybe=f}(PS),function(){"use strict";(PS["Global"]=PS["Global"]||{}).infinity=1/0}(),function(n){"use strict";n.Global=n.Global||{},n.Global.infinity=n.Global.infinity}(PS),function(n){"use strict";n.abs=Math.abs,n.cos=Math.cos,n.remainder=function(t){return function(n){return t%n}},n.round=Math.round,n.sin=Math.sin,n.pi=Math.PI}(PS.Math=PS.Math||{}),function(n){"use strict";n.Math=n.Math||{};var t=n.Math,r=n.Math;t.abs=r.abs,t.cos=r.cos,t.round=r.round,t.sin=r.sin,t.remainder=r.remainder,t.pi=r.pi}(PS),function(n){"use strict";n["Data.Int"]=n["Data.Int"]||{};var t=n["Data.Int"],r=n["Data.Int"],e=n["Data.Boolean"],u=n["Data.Bounded"],i=n["Data.Maybe"],o=n.Global,a=n.Math,c=r.fromNumberImpl(i.Just.create)(i.Nothing.value);t.fromNumber=c,t.round=function(n){return function(n){if(n===o.infinity)return 0;if(n===-o.infinity)return 0;if(n>=r.toNumber(u.top(u.boundedInt)))return u.top(u.boundedInt);if(n<=r.toNumber(u.bottom(u.boundedInt)))return u.bottom(u.boundedInt);if(e.otherwise)return i.fromMaybe(0)(c(n));throw Error("Failed pattern match at Data.Int (line 66, column 1 - line 66, column 29): "+[n.constructor.name])}(a.round(n))},t.toNumber=r.toNumber}(PS),function(n){"use strict";n.showIntImpl=function(n){return""+n},n.showNumberImpl=function(n){var t=""+n;return isNaN(t+".0")?t:t+".0"}}(PS["Data.Show"]=PS["Data.Show"]||{}),function(n){"use strict";n["Data.Show"]=n["Data.Show"]||{};var t=n["Data.Show"],r=n["Data.Show"],e=function(n){this.show=n},u=new e(r.showNumberImpl),i=new e(r.showIntImpl);t.Show=e,t.show=function(n){return n.show},t.showInt=i,t.showNumber=u}(PS),function(n){"use strict";n.Color=n.Color||{};var t=n.Color,g=n["Data.Boolean"],S=n["Data.Int"],D=n["Data.Ord"],o=n["Data.Show"],y=n.Math,w=function(){function u(n,t,r,e){this.value0=n,this.value1=t,this.value2=r,this.value3=e}return u.create=function(e){return function(r){return function(t){return function(n){return new u(e,r,t,n)}}}},u}(),e=function(v){return function(m){return function(h){return function(n){var r=D.clamp(D.ordInt)(0)(255)(v),e=S.toNumber(r)/255,u=D.clamp(D.ordInt)(0)(255)(m),i=S.toNumber(u)/255,t=D.clamp(D.ordInt)(0)(255)(h),o=D.max(D.ordInt)(D.max(D.ordInt)(r)(u))(t),a=D.min(D.ordInt)(D.min(D.ordInt)(r)(u))(t),c=o-a|0,f=S.toNumber(c)/255,l=S.toNumber(o+a|0)/510,s=function(){if(0===c)return 0;if(g.otherwise)return f/(1-y.abs(2*l-1));throw Error("Failed pattern match at Color (line 157, column 5 - line 158, column 75): ")}(),d=S.toNumber(t)/255,p=60*function(n){if(0===n)return 0;if(o===r)return t=6,y.remainder(y.remainder((i-d)/f)(t)+t)(t);var t;if(o===u)return(d-e)/f+2;if(g.otherwise)return(e-i)/f+4;throw Error("Failed pattern match at Color (line 148, column 5 - line 148, column 17): "+[n.constructor.name])}(c);return new w(p,s,l,n)}}}};t.rgba=e,t.rgb=function(r){return function(t){return function(n){return e(r)(t)(n)(1)}}},t.cssStringHSLA=function(n){var t=function(n){return o.show(o.showNumber)(S.toNumber(S.round(100*n))/100)},r=t(100*n.value1)+"%",e=t(100*n.value2)+"%",u=t(n.value0),i=o.show(o.showNumber)(n.value3);return 1===n.value3?"hsl("+u+", "+r+", "+e+")":"hsla("+u+", "+r+", "+e+", "+i+")"}}(PS),function(){"use strict";(PS["Control.Apply"]=PS["Control.Apply"]||{}).arrayApply=function(c){return function(n){for(var t=c.length,r=n.length,e=Array(t*r),u=0,i=0;i<t;i++)for(var o=c[i],a=0;a<r;a++)e[u++]=o(n[a]);return e}}}(),function(n){"use strict";n["Control.Apply"]=n["Control.Apply"]||{};var t=n["Control.Apply"],e=n["Control.Category"],u=n["Data.Function"],i=n["Data.Functor"],r=function(n,t){this.Functor0=n,this.apply=t},o=new r(function(){return i.functorArray},n["Control.Apply"].arrayApply),a=function(n){return n.apply};t.Apply=r,t.apply=a,t.applySecond=function(r){return function(t){return function(n){return a(r)(i.map(r.Functor0())(u.const(e.identity(e.categoryFn)))(t))(n)}}},t.lift2=function(e){return function(r){return function(t){return function(n){return a(e)(i.map(e.Functor0())(r)(t))(n)}}}},t.applyArray=o}(PS),function(n){"use strict";n["Control.Applicative"]=n["Control.Applicative"]||{};var t=n["Control.Applicative"],e=n["Control.Apply"],u=n["Data.Unit"],i=function(n){return n.pure};t.Applicative=function(n,t){this.Apply0=n,this.pure=t},t.pure=i,t.liftA1=function(r){return function(t){return function(n){return e.apply(r.Apply0())(i(r)(t))(n)}}},t.when=function(r){return function(t){return function(n){if(t)return n;if(!t)return i(r)(u.unit);throw Error("Failed pattern match at Control.Applicative (line 57, column 1 - line 57, column 63): "+[t.constructor.name,n.constructor.name])}}}}(PS),function(){"use strict";(PS["Control.Bind"]=PS["Control.Bind"]||{}).arrayBind=function(u){return function(n){for(var t=[],r=0,e=u.length;r<e;r++)Array.prototype.push.apply(t,n(u[r]));return t}}}(),function(n){"use strict";n["Control.Bind"]=n["Control.Bind"]||{};var t=n["Control.Bind"],r=n["Control.Apply"],e=function(n,t){this.Apply0=n,this.bind=t},u=new e(function(){return r.applyArray},n["Control.Bind"].arrayBind);t.Bind=e,t.bind=function(n){return n.bind},t.bindArray=u}(PS),function(n){"use strict";n["Control.Monad"]=n["Control.Monad"]||{};var t=n["Control.Monad"],e=n["Control.Applicative"],u=n["Control.Bind"];t.Monad=function(n,t){this.Applicative0=n,this.Bind1=t},t.ap=function(r){return function(t){return function(n){return u.bind(r.Bind1())(t)(function(t){return u.bind(r.Bind1())(n)(function(n){return e.pure(r.Applicative0())(t(n))})})}}}}(PS),function(n){"use strict";n.range=function(i){return function(n){for(var t=n<i?-1:1,r=Array(t*(n-i)+1),e=i,u=0;e!==n;)r[u++]=e,e+=t;return r[u]=e,r}},n.length=function(n){return n.length},n.indexImpl=function(e){return function(r){return function(t){return function(n){return n<0||t.length<=n?r:e(t[n])}}}}}(PS["Data.Array"]=PS["Data.Array"]||{}),function(n){"use strict";n["Data.Array"]=n["Data.Array"]||{};var t=n["Data.Array"],r=n["Data.Array"],e=n["Control.Bind"],u=n["Data.Function"],i=n["Data.Maybe"],o=function(n){return[n]},a=r.indexImpl(i.Just.create)(i.Nothing.value),c=u.flip(e.bind(e.bindArray));t.singleton=o,t.index=a,t.concatMap=c,t.mapMaybe=function(t){return c((r=i.maybe([])(o),function(n){return r(t(n))}));var r},t.range=r.range}(PS),function(){"use strict";(PS["Data.Ring"]=PS["Data.Ring"]||{}).intSub=function(t){return function(n){return t-n|0}}}(),function(n){"use strict";n.intAdd=function(t){return function(n){return t+n|0}},n.intMul=function(t){return function(n){return t*n|0}}}(PS["Data.Semiring"]=PS["Data.Semiring"]||{}),function(n){"use strict";n["Data.Semiring"]=n["Data.Semiring"]||{};var t=n["Data.Semiring"],r=n["Data.Semiring"],e=function(n,t,r,e){this.add=n,this.mul=t,this.one=r,this.zero=e},u=new e(r.intAdd,r.intMul,1,0);t.Semiring=e,t.add=function(n){return n.add},t.zero=function(n){return n.zero},t.mul=function(n){return n.mul},t.one=function(n){return n.one},t.semiringInt=u}(PS),function(n){"use strict";n["Data.Ring"]=n["Data.Ring"]||{};var t=n["Data.Ring"],r=n["Data.Semiring"],e=function(n,t){this.Semiring0=n,this.sub=t},u=new e(function(){return r.semiringInt},n["Data.Ring"].intSub);t.Ring=e,t.sub=function(n){return n.sub},t.ringInt=u}(PS),function(n){"use strict";n["Data.CommutativeRing"]=n["Data.CommutativeRing"]||{};var t=n["Data.CommutativeRing"],r=n["Data.Ring"],e=function(n){this.Ring0=n},u=new e(function(){return r.ringInt});t.CommutativeRing=e,t.commutativeRingInt=u}(PS),function(n){"use strict";n.intDegree=function(n){return Math.min(Math.abs(n),2147483647)},n.intDiv=function(t){return function(n){return 0===n?0:0<n?Math.floor(t/n):-Math.floor(t/-n)}},n.intMod=function(r){return function(n){if(0===n)return 0;var t=Math.abs(n);return(r%t+t)%t}}}(PS["Data.EuclideanRing"]=PS["Data.EuclideanRing"]||{}),function(n){"use strict";n["Data.EuclideanRing"]=n["Data.EuclideanRing"]||{};var t=n["Data.EuclideanRing"],r=n["Data.EuclideanRing"],e=n["Data.CommutativeRing"],u=function(n,t,r,e){this.CommutativeRing0=n,this.degree=t,this.div=r,this.mod=e},i=new u(function(){return e.commutativeRingInt},r.intDegree,r.intDiv,r.intMod);t.EuclideanRing=u,t.degree=function(n){return n.degree},t.div=function(n){return n.div},t.mod=function(n){return n.mod},t.euclideanRingInt=i}(PS),function(n){"use strict";n.foldrArray=function(u){return function(e){return function(n){for(var t=e,r=n.length-1;0<=r;r--)t=u(n[r])(t);return t}}},n.foldlArray=function(i){return function(u){return function(n){for(var t=u,r=n.length,e=0;e<r;e++)t=i(t)(n[e]);return t}}}}(PS["Data.Foldable"]=PS["Data.Foldable"]||{}),function(n){"use strict";n.concatString=function(t){return function(n){return t+n}},n.concatArray=function(t){return function(n){return 0===t.length?n:0===n.length?t:t.concat(n)}}}(PS["Data.Semigroup"]=PS["Data.Semigroup"]||{}),function(n){"use strict";n["Data.Semigroup"]=n["Data.Semigroup"]||{};var t=n["Data.Semigroup"],r=n["Data.Semigroup"],e=function(n){this.append=n},u=new e(r.concatString),i=new e(r.concatArray);t.Semigroup=e,t.append=function(n){return n.append},t.semigroupString=u,t.semigroupArray=i}(PS),function(n){"use strict";n["Data.Monoid"]=n["Data.Monoid"]||{};var t=n["Data.Monoid"],r=n["Data.Semigroup"],e=function(n,t){this.Semigroup0=n,this.mempty=t},u=new e(function(){return r.semigroupString},"");t.Monoid=e,t.mempty=function(n){return n.mempty},t.monoidString=u}(PS),function(n){"use strict";n["Data.Foldable"]=n["Data.Foldable"]||{};var t=n["Data.Foldable"],r=n["Data.Foldable"],u=n["Control.Applicative"],i=n["Control.Apply"],e=n["Control.Category"],o=n["Data.Function"],a=n["Data.Maybe"],c=n["Data.Monoid"],f=n["Data.Semigroup"],l=n["Data.Unit"],s=function(n,t,r){this.foldMap=n,this.foldl=t,this.foldr=r},d=function(n){return n.foldr},p=function(e){return function(n){return function(t){return d(n)((r=i.applySecond(e.Apply0()),function(n){return r(t(n))}))(u.pure(e)(l.unit));var r}}},h=function(n){return n.foldl},m=new s(function(r){return function(t){return function(n){if(n instanceof a.Nothing)return c.mempty(r);if(n instanceof a.Just)return t(n.value0);throw Error("Failed pattern match at Data.Foldable (line 129, column 1 - line 135, column 27): "+[t.constructor.name,n.constructor.name])}}},function(r){return function(t){return function(n){if(n instanceof a.Nothing)return t;if(n instanceof a.Just)return r(t)(n.value0);throw Error("Failed pattern match at Data.Foldable (line 129, column 1 - line 135, column 27): "+[r.constructor.name,t.constructor.name,n.constructor.name])}}},function(r){return function(t){return function(n){if(n instanceof a.Nothing)return t;if(n instanceof a.Just)return r(n.value0)(t);throw Error("Failed pattern match at Data.Foldable (line 129, column 1 - line 135, column 27): "+[r.constructor.name,t.constructor.name,n.constructor.name])}}}),v=function(n){return function(e){return function(r){return d(n)(function(t){return function(n){return f.append(e.Semigroup0())(r(t))(n)}})(c.mempty(e))}}},g=new s(function(n){return v(g)(n)},r.foldlArray,r.foldrArray),S=function(n){return n.foldMap};t.Foldable=s,t.foldr=d,t.foldl=h,t.foldMap=S,t.foldMapDefaultR=v,t.fold=function(t){return function(n){return S(t)(n)(e.identity(e.categoryFn))}},t.traverse_=p,t.for_=function(t){return function(n){return o.flip(p(t)(n))}},t.intercalate=function(t){return function(e){return function(r){return function(n){return h(t)(function(t){return function(n){return t.init?{init:!1,acc:n}:{init:!1,acc:f.append(e.Semigroup0())(t.acc)(f.append(e.Semigroup0())(r)(n))}}})({init:!0,acc:c.mempty(e)})(n).acc}}}},t.foldableArray=g,t.foldableMaybe=m}(PS),function(){"use strict";(PS["Data.FunctorWithIndex"]=PS["Data.FunctorWithIndex"]||{}).mapWithIndexArray=function(u){return function(n){for(var t=n.length,r=Array(t),e=0;e<t;e++)r[e]=u(e)(n[e]);return r}}}(),function(n){"use strict";n["Data.FunctorWithIndex"]=n["Data.FunctorWithIndex"]||{};var t=n["Data.FunctorWithIndex"],r=n["Data.Functor"],e=function(n,t){this.Functor0=n,this.mapWithIndex=t},u=new e(function(){return r.functorArray},n["Data.FunctorWithIndex"].mapWithIndexArray);t.FunctorWithIndex=e,t.mapWithIndex=function(n){return n.mapWithIndex},t.functorWithIndexArray=u}(PS),function(n){"use strict";n["Data.FoldableWithIndex"]=n["Data.FoldableWithIndex"]||{};var t=n["Data.FoldableWithIndex"],u=n["Data.Foldable"],i=n["Data.FunctorWithIndex"],r=n["Data.Monoid"],o=n["Data.Semigroup"],a=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),e=function(n,t,r,e){this.Foldable0=n,this.foldMapWithIndex=t,this.foldlWithIndex=r,this.foldrWithIndex=e},c=function(n){return n.foldrWithIndex},f=function(n){return function(u){return function(e){return c(n)(function(r){return function(t){return function(n){return o.append(u.Semigroup0())(e(r)(t))(n)}}})(r.mempty(u))}}},l=new e(function(){return u.foldableArray},function(n){return f(l)(n)},function(e){return function(n){var t=u.foldl(u.foldableArray)(function(t){return function(n){return e(n.value0)(t)(n.value1)}})(n),r=i.mapWithIndex(i.functorWithIndexArray)(a.create);return function(n){return t(r(n))}}},function(e){return function(n){var t=u.foldr(u.foldableArray)(function(t){return function(n){return e(t.value0)(t.value1)(n)}})(n),r=i.mapWithIndex(i.functorWithIndexArray)(a.create);return function(n){return t(r(n))}}});t.FoldableWithIndex=e,t.foldrWithIndex=c,t.foldlWithIndex=function(n){return n.foldlWithIndex},t.foldMapWithIndex=function(n){return n.foldMapWithIndex},t.foldMapWithIndexDefaultR=f,t.foldableWithIndexArray=l}(PS),function(n){"use strict";n["Data.List.Types"]=n["Data.List.Types"]||{};var t=n["Data.List.Types"],u=n["Data.Foldable"],i=n["Data.Function"],o=n["Data.Monoid"],a=n["Data.Semigroup"],c=function(){function n(){}return n.value=new n,n}(),f=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),l=new u.Foldable(function(e){return function(r){return u.foldl(l)(function(n){var t=a.append(e.Semigroup0())(n);return function(n){return t(r(n))}})(o.mempty(e))}},function(o){return function(i){return function(r){var n,e=i,u=!1;function t(n,t){if(t instanceof c)return u=!0,n;if(t instanceof f)return e=o(n)(t.value0),void(r=t.value1);throw Error("Failed pattern match at Data.List.Types (line 109, column 12 - line 111, column 30): "+[t.constructor.name])}for(;!u;)n=t(e,r);return n}}},function(e){return function(n){var t=u.foldl(l)(i.flip(f.create))(c.value),r=u.foldl(l)(i.flip(e))(n);return function(n){return r(t(n))}}}),r=new a.Semigroup(function(t){return function(n){return u.foldr(l)(f.create)(n)(t)}}),e=new o.Monoid(function(){return r},c.value);t.Nil=c,t.Cons=f,t.semigroupList=r,t.monoidList=e,t.foldableList=l}(PS),function(n){"use strict";n["Data.List"]=n["Data.List"]||{};var t=n["Data.List"],r=n["Data.Foldable"],e=n["Data.List.Types"];t.fromFoldable=function(n){return r.foldr(n)(e.Cons.create)(e.Nil.value)},t.singleton=function(n){return new e.Cons(n,e.Nil.value)}}(PS),function(n){"use strict";n.pureE=function(n){return function(){return n}},n.bindE=function(t){return function(n){return function(){return n(t())()}}}}(PS.Effect=PS.Effect||{}),function(n){"use strict";n.Effect=n.Effect||{};var t=n.Effect,r=n.Effect,e=n["Control.Applicative"],u=n["Control.Apply"],i=n["Control.Bind"],o=n["Control.Monad"],a=n["Data.Functor"],c=new o.Monad(function(){return s},function(){return f}),f=new i.Bind(function(){return l},r.bindE),l=new u.Apply(function(){return d},o.ap(c)),s=new e.Applicative(function(){return l},r.pureE),d=new a.Functor(e.liftA1(s));t.functorEffect=d,t.applyEffect=l,t.applicativeEffect=s,t.bindEffect=f,t.monadEffect=c}(PS),function(n){"use strict";function t(a,c,f,l){return function(o){return function(i){return function(u){return function(){var n=(void 0===window.flareID&&(window.flareID=0),window.flareID=window.flareID+1,"flare-component-"+window.flareID),t=c(i);t.className="flare-input-"+a,t.id=n;var r=document.createElement("div");if(r.className="flare-input",""!==o){var e=document.createElement("label");e.htmlFor=n,e.appendChild(document.createTextNode(o)),r.appendChild(e)}return r.appendChild(t),t.addEventListener(f,function(n){var t=l(n.target,i);u(t)()}),r}}}}}n.removeChildren=function(t){return function(){for(var n=document.getElementById(t);n.firstChild;)n.removeChild(n.firstChild)}},n.appendComponent=function(t){return function(n){return function(){document.getElementById(t).appendChild(n)}}},n.cIntRange=function(r){return function(a){return function(o){return t("int-"+r,function(n){var t=document.createElement("input");return t.type=r,t.min=""+a,t.max=""+o,t.step="1",t.value=""+n,t},"input",function(n,t){return r=a,e=o,u=t,isNaN(i=parseInt(n.value,10))?u:i<r?r:e<i?e:i;var r,e,u,i})}}}}(PS.Flare=PS.Flare||{}),function(n){function u(n){var r=[],e=n;return{subscribe:function(n){r.push(n),n(e)},get:function(){return e},set:function(t){e=t,r.forEach(function(n){n(t)})}}}n.constant=u,n.mapSig=function(r){return function(n){var t=u(r(n.get()));return n.subscribe(function(n){t.set(r(n))}),t}},n.applySig=function(e){return function(n){var t=u(e.get()(n.get())),r=function(){t.set(e.get()(n.get()))};return e.subscribe(r),n.subscribe(r),t}},n.runSignal=function(n){return function(){return n.subscribe(function(n){n()}),{}}},n.get=function(n){return function(){return n.get()}}}(PS.Signal=PS.Signal||{}),function(n){"use strict";n.Signal=n.Signal||{};var t=n.Signal,r=n.Signal,e=n["Control.Apply"],u=new n["Data.Functor"].Functor(r.mapSig),i=new e.Apply(function(){return u},r.applySig);t.functorSignal=u,t.applySignal=i,t.constant=r.constant,t.runSignal=r.runSignal}(PS),function(n){n.channelP=function(t){return function(n){return function(){return t(n)}}},n.sendP=function(t){return function(n){return function(){t.set(n)}}},n.subscribe=function(n){return n}}(PS["Signal.Channel"]=PS["Signal.Channel"]||{}),function(n){"use strict";n["Signal.Channel"]=n["Signal.Channel"]||{};var t=n["Signal.Channel"],r=n["Signal.Channel"],e=r.sendP,u=r.channelP(n.Signal.constant);t.channel=u,t.send=e,t.subscribe=r.subscribe}(PS),function(n){"use strict";n.Flare=n.Flare||{};var t=n.Flare,a=n.Flare,r=n["Control.Apply"],u=n["Data.Foldable"],i=n["Data.Functor"],e=n["Data.Semigroup"],o=n.Effect,c=n.Signal,f=n["Signal.Channel"],l=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),s=function(n){return n},d=new i.Functor(function(t){return function(n){return new l(n.value0,i.map(c.functorSignal)(t)(n.value1))}}),p=new i.Functor(function(t){return function(n){return s(i.map(o.functorEffect)(i.map(d)(t))(n))}}),h=function(e){return function(r){return function(t){return function(){var n=t();return a.removeChildren(e)(),u.traverse_(o.applicativeEffect)(u.foldableArray)(a.appendComponent(e))(n.value0)(),r(n.value1)()}}}},m=new r.Apply(function(){return d},function(t){return function(n){return new l(e.append(e.semigroupArray)(t.value0)(n.value0),r.apply(c.applySignal)(t.value1)(n.value1))}}),v=new r.Apply(function(){return p},function(t){return function(n){return s(r.lift2(o.applyEffect)(r.apply(m))(t)(n))}});t.intRange=function(o){return function(r){return function(t){return function(n){return i=a.cIntRange("number")(r)(t),u=o,e=n,s(function(){var n=f.channel(e)(),t=i(u)(e)(f.send(n))(),r=f.subscribe(n);return new l([t],r)});var e,u,i}}}},t.flareWith=h,t.runFlareWith=function(e){return function(r){return function(n){return h(e)((t=i.map(c.functorSignal)(r),function(n){return c.runSignal(t(n))}))(n);var t}}},t.functorFlare=d,t.applyFlare=m,t.functorUI=p,t.applyUI=v}(PS),function(n){"use strict";n.getCanvasElementByIdImpl=function(t,r,e){return function(){var n=document.getElementById(t);return n&&n instanceof HTMLCanvasElement?r(n):e}},n.getContext2D=function(n){return function(){return n.getContext("2d")}},n.getCanvasWidth=function(n){return function(){return n.width}},n.getCanvasHeight=function(n){return function(){return n.height}},n.setLineWidth=function(t){return function(n){return function(){t.lineWidth=n}}},n.setFillStyle=function(t){return function(n){return function(){t.fillStyle=n}}},n.setStrokeStyle=function(t){return function(n){return function(){t.strokeStyle=n}}},n.setShadowColor=function(t){return function(n){return function(){t.shadowColor=n}}},n.setShadowBlur=function(t){return function(n){return function(){t.shadowBlur=n}}},n.setShadowOffsetX=function(t){return function(n){return function(){t.shadowOffsetX=n}}},n.setShadowOffsetY=function(t){return function(n){return function(){t.shadowOffsetY=n}}},n.beginPath=function(n){return function(){n.beginPath()}},n.stroke=function(n){return function(){n.stroke()}},n.fill=function(n){return function(){n.fill()}},n.clip=function(n){return function(){n.clip()}},n.lineTo=function(r){return function(t){return function(n){return function(){r.lineTo(t,n)}}}},n.moveTo=function(r){return function(t){return function(n){return function(){r.moveTo(t,n)}}}},n.closePath=function(n){return function(){n.closePath()}},n.arc=function(t){return function(n){return function(){t.arc(n.x,n.y,n.radius,n.start,n.end)}}},n.rect=function(t){return function(n){return function(){t.rect(n.x,n.y,n.width,n.height)}}},n.clearRect=function(t){return function(n){return function(){t.clearRect(n.x,n.y,n.width,n.height)}}},n.scale=function(t){return function(n){return function(){t.scale(n.scaleX,n.scaleY)}}},n.rotate=function(t){return function(n){return function(){t.rotate(n)}}},n.translate=function(t){return function(n){return function(){t.translate(n.translateX,n.translateY)}}},n.font=function(n){return function(){return n.font}},n.setFont=function(t){return function(n){return function(){t.font=n}}},n.fillText=function(e){return function(r){return function(t){return function(n){return function(){e.fillText(r,t,n)}}}}},n.save=function(n){return function(){n.save()}},n.restore=function(n){return function(){n.restore()}}}(PS["Graphics.Canvas"]=PS["Graphics.Canvas"]||{}),function(n){"use strict";n["Graphics.Canvas"]=n["Graphics.Canvas"]||{};var t=n["Graphics.Canvas"],e=n["Graphics.Canvas"],r=n["Data.Maybe"];t.getCanvasElementById=function(n){return e.getCanvasElementByIdImpl(n,r.Just.create,r.Nothing.value)},t.strokePath=function(r){return function(t){return function(){e.beginPath(r)();var n=t();return e.stroke(r)(),n}}},t.fillPath=function(r){return function(t){return function(){e.beginPath(r)();var n=t();return e.fill(r)(),n}}},t.withContext=function(r){return function(t){return function(){e.save(r)();var n=t();return e.restore(r)(),n}}},t.getContext2D=e.getContext2D,t.getCanvasWidth=e.getCanvasWidth,t.getCanvasHeight=e.getCanvasHeight,t.setLineWidth=e.setLineWidth,t.setFillStyle=e.setFillStyle,t.setStrokeStyle=e.setStrokeStyle,t.setShadowBlur=e.setShadowBlur,t.setShadowOffsetX=e.setShadowOffsetX,t.setShadowOffsetY=e.setShadowOffsetY,t.setShadowColor=e.setShadowColor,t.clip=e.clip,t.lineTo=e.lineTo,t.moveTo=e.moveTo,t.closePath=e.closePath,t.arc=e.arc,t.rect=e.rect,t.clearRect=e.clearRect,t.scale=e.scale,t.rotate=e.rotate,t.translate=e.translate,t.setFont=e.setFont,t.fillText=e.fillText}(PS),function(n){"use strict";n["Graphics.Drawing.Font"]=n["Graphics.Drawing.Font"]||{};var t=n["Graphics.Drawing.Font"],r=n["Control.Alt"],e=n["Data.Foldable"],u=n["Data.Maybe"],i=n["Data.Monoid"],o=n["Data.Semigroup"],a=n["Data.Show"],c=function(){function e(n,t,r){this.value0=n,this.value1=t,this.value2=r}return e.create=function(r){return function(t){return function(n){return new e(r,t,n)}}},e}(),f=new o.Semigroup(function(t){return function(n){return{style:r.alt(u.altMaybe)(t.style)(n.style),variant:r.alt(u.altMaybe)(t.variant)(n.variant),weight:r.alt(u.altMaybe)(t.weight)(n.weight)}}}),l=new i.Monoid(function(){return f},{style:u.Nothing.value,variant:u.Nothing.value,weight:u.Nothing.value});t.font=c.create,t.fontString=function(n){return t=n.value2,e.intercalate(e.foldableArray)(i.monoidString)(" ")([e.fold(e.foldableMaybe)(i.monoidString)(t.style),e.fold(e.foldableMaybe)(i.monoidString)(t.variant),e.fold(e.foldableMaybe)(i.monoidString)(t.weight)])+" "+a.show(a.showInt)(n.value1)+"px "+n.value0;var t},t.serif="serif",t.semigroupFontOptions=f,t.monoidFontOptions=l}(PS),function(n){"use strict";n["Graphics.Drawing"]=n["Graphics.Drawing"]||{};var t=n["Graphics.Drawing"],i=n.Color,r=n["Control.Alt"],o=n["Control.Applicative"],a=n["Data.Foldable"],e=n["Data.Function"],c=n["Data.Functor"],u=n["Data.List"],f=n["Data.List.Types"],l=n["Data.Maybe"],s=n["Data.Monoid"],d=n["Data.Semigroup"],p=n["Data.Unit"],h=n.Effect,m=n["Graphics.Canvas"],v=n["Graphics.Drawing.Font"],g=n.Math,S=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),D=function(){function t(n){this.value0=n}return t.create=function(n){return new t(n)},t}(),y=function(){function t(n){this.value0=n}return t.create=function(n){return new t(n)},t}(),w=function(){function t(n){this.value0=n}return t.create=function(n){return new t(n)},t}(),b=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),C=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),F=function(){function i(n,t,r,e,u){this.value0=n,this.value1=t,this.value2=r,this.value3=e,this.value4=u}return i.create=function(u){return function(e){return function(r){return function(t){return function(n){return new i(u,e,r,t,n)}}}}},i}(),I=function(){function t(n){this.value0=n}return t.create=function(n){return new t(n)},t}(),P=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),A=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),M=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),E=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),x=function(){function r(n,t){this.value0=n,this.value1=t}return r.create=function(t){return function(n){return new r(t,n)}},r}(),W=F.create,N=new d.Semigroup(function(t){return function(n){return{color:r.alt(l.altMaybe)(t.color)(n.color)}}}),B=new d.Semigroup(function(t){return function(n){return new I(t instanceof I?d.append(f.semigroupList)(t.value0)(u.singleton(n)):new f.Cons(t,n instanceof I?n.value0:new f.Cons(n,f.Nil.value)))}}),R=M.create,L=e.flip(C.create),G=new s.Monoid(function(){return N},{color:l.Nothing.value}),T=new s.Monoid(function(){return B},new I(s.mempty(f.monoidList))),O=e.flip(b.create),q=function(u){return function(e){return function(r){return function(t){return function(n){return new y({x:u,y:e,start:r,end:t,radius:n})}}}}};t.closed=function(n){var t=S.create(!0),r=u.fromFoldable(n);return function(n){return t(r(n))}},t.circle=function(t){return function(n){return q(t)(n)(0)(2*g.pi)}},t.arc=q,t.fillColor=function(n){return{color:new l.Just(n)}},t.lineWidth=function(n){return{color:l.Nothing.value,lineWidth:new l.Just(n)}},t.filled=O,t.outlined=L,t.scale=function(t){return function(n){return P.create({scaleX:t,scaleY:n})}},t.translate=function(t){return function(n){return A.create({translateX:t,translateY:n})}},t.rotate=R,t.text=W,t.render=function(r){var e=function(n){if(n instanceof S&&n.value1 instanceof f.Nil)return o.pure(h.applicativeEffect)(p.unit);if(n instanceof S&&n.value1 instanceof f.Cons)return function(){return m.moveTo(r)(n.value1.value0.x)(n.value1.value0.y)(),a.for_(h.applicativeEffect)(f.foldableList)(n.value1.value1)(function(n){return m.lineTo(r)(n.x)(n.y)})(),o.when(h.applicativeEffect)(n.value0)(c.void(h.functorEffect)(m.closePath(r)))()};if(n instanceof D)return c.void(h.functorEffect)(m.rect(r)(n.value0));if(n instanceof y)return c.void(h.functorEffect)(m.arc(r)(n.value0));if(n instanceof w)return a.for_(h.applicativeEffect)(f.foldableList)(n.value0)(e);throw Error("Failed pattern match at Graphics.Drawing (line 268, column 3 - line 268, column 38): "+[n.constructor.name])},n=function(n){return a.for_(h.applicativeEffect)(a.foldableMaybe)(n.color)(function(n){return m.setFillStyle(r)(i.cssStringHSLA(n))})},u=function(t){if(t instanceof b)return c.void(h.functorEffect)(m.withContext(r)(function(){return n(t.value1)(),m.fillPath(r)(e(t.value0))()}));if(t instanceof C)return c.void(h.functorEffect)(m.withContext(r)(function(){var n;return n=t.value1,a.for_(h.applicativeEffect)(a.foldableMaybe)(n.color)(function(n){return m.setStrokeStyle(r)(i.cssStringHSLA(n))})(),a.for_(h.applicativeEffect)(a.foldableMaybe)(n.lineWidth)(function(n){return m.setLineWidth(r)(n)})(),m.strokePath(r)(e(t.value0))()}));if(t instanceof I)return a.for_(h.applicativeEffect)(f.foldableList)(t.value0)(u);if(t instanceof P)return c.void(h.functorEffect)(m.withContext(r)(function(){return m.scale(r)(t.value0)(),u(t.value1)()}));if(t instanceof A)return c.void(h.functorEffect)(m.withContext(r)(function(){return m.translate(r)(t.value0)(),u(t.value1)()}));if(t instanceof M)return c.void(h.functorEffect)(m.withContext(r)(function(){return m.rotate(r)(t.value0)(),u(t.value1)()}));if(t instanceof E)return c.void(h.functorEffect)(m.withContext(r)(function(){return e(t.value0)(),m.clip(r)(),u(t.value1)()}));if(t instanceof x)return c.void(h.functorEffect)(m.withContext(r)(function(){var n;return n=t.value0,a.for_(h.applicativeEffect)(a.foldableMaybe)(n.color)(function(n){return m.setShadowColor(r)(i.cssStringHSLA(n))})(),a.for_(h.applicativeEffect)(a.foldableMaybe)(n.blur)(function(n){return m.setShadowBlur(r)(n)})(),a.for_(h.applicativeEffect)(a.foldableMaybe)(n.offset)(function(n){return function(){return m.setShadowOffsetX(r)(n.x)(),m.setShadowOffsetY(r)(n.y)()}})(),u(t.value1)()}));if(t instanceof F)return c.void(h.functorEffect)(m.withContext(r)(function(){return m.setFont(r)(v.fontString(t.value0))(),n(t.value3)(),m.fillText(r)(t.value4)(t.value1)(t.value2)()}));throw Error("Failed pattern match at Graphics.Drawing (line 221, column 3 - line 224, column 21): "+[t.constructor.name])};return u},t.semigroupFillStyle=N,t.monoidFillStyle=G,t.semigroupDrawing=B,t.monoidDrawing=T}(PS),function(n){"use strict";n["Flare.Drawing"]=n["Flare.Drawing"]||{};var o=n["Data.Maybe"],a=n.Flare,c=n["Graphics.Canvas"],f=n["Graphics.Drawing"];n["Flare.Drawing"].runFlareDrawing=function(i){return function(r){return function(t){return function(){var n=c.getCanvasElementById(r)(),e=o.fromJust()(n),u=c.getContext2D(e)();return a.runFlareWith(i)(function(r){return function(){var n=c.getCanvasWidth(e)(),t=c.getCanvasHeight(e)();return c.clearRect(u)({x:0,y:0,width:n,height:t})(),f.render(u)(r)()}})(t)()}}}}}(PS),function(n){"use strict";n.Main=n.Main||{};var t=n.Main,r=n.Color,e=n["Control.Apply"],o=n["Data.Array"],a=n["Data.EuclideanRing"],c=n["Data.Foldable"],f=n["Data.FoldableWithIndex"],l=n["Data.Functor"],u=n["Data.Int"],i=n["Data.Monoid"],s=n["Data.Show"],d=n.Flare,p=n["Flare.Drawing"],h=n["Graphics.Drawing"],m=n["Graphics.Drawing.Font"],v=n.Math,g=d.intRange("Skip size")(1)(30)(3),S=r.rgb(255)(0)(0),D=function(e){return function(t){var n=o.range(0)(e-1|0),r=l.map(l.functorArray)(function(n){return 2*u.toNumber(n)*v.pi/u.toNumber(e)-v.pi/2})(n);return l.map(l.functorArray)(function(n){return{x:t*v.cos(n),y:t*v.sin(n)}})(r)}},y=d.intRange("Point count")(3)(30)(7),w=m.font(m.serif)(20)(i.mempty(m.monoidFontOptions)),b=function(t){return function(n){return c.fold(c.foldableArray)(h.monoidDrawing)([h.filled(h.fillColor(S))(h.circle(n.x)(n.y)(4)),h.translate(-5)(10)(h.text(w)(1.1*n.x)(1.1*n.y)(i.mempty(h.monoidFillStyle))(s.show(s.showInt)(t)))])}},C=e.lift2(d.applyUI)(function(i){return function(t){var n=h.outlined(h.lineWidth(2)),r=l.map(l.functorArray)(function(n){return a.mod(a.euclideanRingInt)(t*n|0)(i)})(o.range(0)(i-1|0)),e=D(i)(200),u=o.mapMaybe(o.index(e))(r);return h.translate(250)(250)(c.fold(c.foldableArray)(h.monoidDrawing)([n(h.closed(c.foldableArray)(u)),n(h.circle(0)(0)(200)),f.foldMapWithIndex(f.foldableWithIndexArray)(h.monoidDrawing)(b)(e)]))}})(y)(g),F=p.runFlareDrawing("controls")("output")(C);t.main=F,t.pointCount=y,t.skipSize=g,t.skippedStar=C,t.labeledRedPoint=b,t.pointsAroundCircle=D,t.red=S,t.myFont=w}(PS),PS.Main.main();
+// Generated by purs bundle 0.13.2
+var PS = {};
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Control.Semigroupoid"] = $PS["Control.Semigroupoid"] || {};
+  var exports = $PS["Control.Semigroupoid"];
+  var Semigroupoid = function (compose) {
+      this.compose = compose;
+  };
+  var semigroupoidFn = new Semigroupoid(function (f) {
+      return function (g) {
+          return function (x) {
+              return f(g(x));
+          };
+      };
+  });
+  var compose = function (dict) {
+      return dict.compose;
+  };
+  exports["compose"] = compose;
+  exports["Semigroupoid"] = Semigroupoid;
+  exports["semigroupoidFn"] = semigroupoidFn;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Control.Category"] = $PS["Control.Category"] || {};
+  var exports = $PS["Control.Category"];
+  var Control_Semigroupoid = $PS["Control.Semigroupoid"];                
+  var Category = function (Semigroupoid0, identity) {
+      this.Semigroupoid0 = Semigroupoid0;
+      this.identity = identity;
+  };
+  var identity = function (dict) {
+      return dict.identity;
+  };
+  var categoryFn = new Category(function () {
+      return Control_Semigroupoid.semigroupoidFn;
+  }, function (x) {
+      return x;
+  });
+  exports["Category"] = Category;
+  exports["identity"] = identity;
+  exports["categoryFn"] = categoryFn;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Function"] = $PS["Data.Function"] || {};
+  var exports = $PS["Data.Function"];
+  var $$const = function (a) {
+      return function (v) {
+          return a;
+      };
+  };
+  exports["const"] = $$const;
+})(PS);
+(function(exports) {
+  "use strict";
+
+  exports.arrayMap = function (f) {
+    return function (arr) {
+      var l = arr.length;
+      var result = new Array(l);
+      for (var i = 0; i < l; i++) {
+        result[i] = f(arr[i]);
+      }
+      return result;
+    };
+  };
+})(PS["Data.Functor"] = PS["Data.Functor"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Functor"] = $PS["Data.Functor"] || {};
+  var exports = $PS["Data.Functor"];
+  var $foreign = $PS["Data.Functor"];              
+  var Functor = function (map) {
+      this.map = map;
+  };
+  var map = function (dict) {
+      return dict.map;
+  };                                                                                             
+  var functorArray = new Functor($foreign.arrayMap);
+  exports["Functor"] = Functor;
+  exports["map"] = map;
+  exports["functorArray"] = functorArray;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Control.Apply"] = $PS["Control.Apply"] || {};
+  var exports = $PS["Control.Apply"];
+  var Control_Category = $PS["Control.Category"];
+  var Data_Function = $PS["Data.Function"];
+  var Data_Functor = $PS["Data.Functor"];                
+  var Apply = function (Functor0, apply) {
+      this.Functor0 = Functor0;
+      this.apply = apply;
+  };                      
+  var apply = function (dict) {
+      return dict.apply;
+  };
+  var applySecond = function (dictApply) {
+      return function (a) {
+          return function (b) {
+              return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(Data_Function["const"](Control_Category.identity(Control_Category.categoryFn)))(a))(b);
+          };
+      };
+  };
+  var lift2 = function (dictApply) {
+      return function (f) {
+          return function (a) {
+              return function (b) {
+                  return apply(dictApply)(Data_Functor.map(dictApply.Functor0())(f)(a))(b);
+              };
+          };
+      };
+  };
+  exports["Apply"] = Apply;
+  exports["apply"] = apply;
+  exports["applySecond"] = applySecond;
+  exports["lift2"] = lift2;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Control.Applicative"] = $PS["Control.Applicative"] || {};
+  var exports = $PS["Control.Applicative"];
+  var Control_Apply = $PS["Control.Apply"];        
+  var Applicative = function (Apply0, pure) {
+      this.Apply0 = Apply0;
+      this.pure = pure;
+  };
+  var pure = function (dict) {
+      return dict.pure;
+  };
+  var liftA1 = function (dictApplicative) {
+      return function (f) {
+          return function (a) {
+              return Control_Apply.apply(dictApplicative.Apply0())(pure(dictApplicative)(f))(a);
+          };
+      };
+  };
+  exports["Applicative"] = Applicative;
+  exports["pure"] = pure;
+  exports["liftA1"] = liftA1;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Control.Bind"] = $PS["Control.Bind"] || {};
+  var exports = $PS["Control.Bind"];
+  var Bind = function (Apply0, bind) {
+      this.Apply0 = Apply0;
+      this.bind = bind;
+  };                     
+  var bind = function (dict) {
+      return dict.bind;
+  };
+  exports["Bind"] = Bind;
+  exports["bind"] = bind;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Control.Monad"] = $PS["Control.Monad"] || {};
+  var exports = $PS["Control.Monad"];
+  var Control_Applicative = $PS["Control.Applicative"];
+  var Control_Bind = $PS["Control.Bind"];                
+  var Monad = function (Applicative0, Bind1) {
+      this.Applicative0 = Applicative0;
+      this.Bind1 = Bind1;
+  };
+  var ap = function (dictMonad) {
+      return function (f) {
+          return function (a) {
+              return Control_Bind.bind(dictMonad.Bind1())(f)(function (v) {
+                  return Control_Bind.bind(dictMonad.Bind1())(a)(function (v1) {
+                      return Control_Applicative.pure(dictMonad.Applicative0())(v(v1));
+                  });
+              });
+          };
+      };
+  };
+  exports["Monad"] = Monad;
+  exports["ap"] = ap;
+})(PS);
+(function(exports) {
+  "use strict";
+
+  exports.foldrArray = function (f) {
+    return function (init) {
+      return function (xs) {
+        var acc = init;
+        var len = xs.length;
+        for (var i = len - 1; i >= 0; i--) {
+          acc = f(xs[i])(acc);
+        }
+        return acc;
+      };
+    };
+  };
+
+  exports.foldlArray = function (f) {
+    return function (init) {
+      return function (xs) {
+        var acc = init;
+        var len = xs.length;
+        for (var i = 0; i < len; i++) {
+          acc = f(acc)(xs[i]);
+        }
+        return acc;
+      };
+    };
+  };
+})(PS["Data.Foldable"] = PS["Data.Foldable"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Monoid"] = $PS["Data.Monoid"] || {};
+  var exports = $PS["Data.Monoid"];
+  var Monoid = function (Semigroup0, mempty) {
+      this.Semigroup0 = Semigroup0;
+      this.mempty = mempty;
+  };
+  var mempty = function (dict) {
+      return dict.mempty;
+  };
+  exports["Monoid"] = Monoid;
+  exports["mempty"] = mempty;
+})(PS);
+(function(exports) {
+  "use strict";
+
+  exports.concatArray = function (xs) {
+    return function (ys) {
+      if (xs.length === 0) return ys;
+      if (ys.length === 0) return xs;
+      return xs.concat(ys);
+    };
+  };
+})(PS["Data.Semigroup"] = PS["Data.Semigroup"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Semigroup"] = $PS["Data.Semigroup"] || {};
+  var exports = $PS["Data.Semigroup"];
+  var $foreign = $PS["Data.Semigroup"];
+  var Semigroup = function (append) {
+      this.append = append;
+  }; 
+  var semigroupArray = new Semigroup($foreign.concatArray);
+  var append = function (dict) {
+      return dict.append;
+  };
+  exports["Semigroup"] = Semigroup;
+  exports["append"] = append;
+  exports["semigroupArray"] = semigroupArray;
+})(PS);
+(function(exports) {
+  "use strict";
+
+  exports.unit = {};
+})(PS["Data.Unit"] = PS["Data.Unit"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Unit"] = $PS["Data.Unit"] || {};
+  var exports = $PS["Data.Unit"];
+  var $foreign = $PS["Data.Unit"];
+  exports["unit"] = $foreign.unit;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Foldable"] = $PS["Data.Foldable"] || {};
+  var exports = $PS["Data.Foldable"];
+  var $foreign = $PS["Data.Foldable"];
+  var Control_Applicative = $PS["Control.Applicative"];
+  var Control_Apply = $PS["Control.Apply"];
+  var Data_Monoid = $PS["Data.Monoid"];
+  var Data_Semigroup = $PS["Data.Semigroup"];
+  var Data_Unit = $PS["Data.Unit"];                
+  var Foldable = function (foldMap, foldl, foldr) {
+      this.foldMap = foldMap;
+      this.foldl = foldl;
+      this.foldr = foldr;
+  };
+  var foldr = function (dict) {
+      return dict.foldr;
+  };
+  var traverse_ = function (dictApplicative) {
+      return function (dictFoldable) {
+          return function (f) {
+              return foldr(dictFoldable)((function () {
+                  var $197 = Control_Apply.applySecond(dictApplicative.Apply0());
+                  return function ($198) {
+                      return $197(f($198));
+                  };
+              })())(Control_Applicative.pure(dictApplicative)(Data_Unit.unit));
+          };
+      };
+  };
+  var foldl = function (dict) {
+      return dict.foldl;
+  }; 
+  var foldMapDefaultR = function (dictFoldable) {
+      return function (dictMonoid) {
+          return function (f) {
+              return foldr(dictFoldable)(function (x) {
+                  return function (acc) {
+                      return Data_Semigroup.append(dictMonoid.Semigroup0())(f(x))(acc);
+                  };
+              })(Data_Monoid.mempty(dictMonoid));
+          };
+      };
+  };
+  var foldableArray = new Foldable(function (dictMonoid) {
+      return foldMapDefaultR(foldableArray)(dictMonoid);
+  }, $foreign.foldlArray, $foreign.foldrArray);
+  var foldMap = function (dict) {
+      return dict.foldMap;
+  };
+  exports["Foldable"] = Foldable;
+  exports["foldr"] = foldr;
+  exports["foldl"] = foldl;
+  exports["foldMap"] = foldMap;
+  exports["foldMapDefaultR"] = foldMapDefaultR;
+  exports["traverse_"] = traverse_;
+  exports["foldableArray"] = foldableArray;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Maybe"] = $PS["Data.Maybe"] || {};
+  var exports = $PS["Data.Maybe"];                 
+  var Nothing = (function () {
+      function Nothing() {
+
+      };
+      Nothing.value = new Nothing();
+      return Nothing;
+  })();
+  var Just = (function () {
+      function Just(value0) {
+          this.value0 = value0;
+      };
+      Just.create = function (value0) {
+          return new Just(value0);
+      };
+      return Just;
+  })();
+  exports["Nothing"] = Nothing;
+  exports["Just"] = Just;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Newtype"] = $PS["Data.Newtype"] || {};
+  var exports = $PS["Data.Newtype"];                                   
+  var Newtype = function (unwrap, wrap) {
+      this.unwrap = unwrap;
+      this.wrap = wrap;
+  };
+  var wrap = function (dict) {
+      return dict.wrap;
+  };
+  var unwrap = function (dict) {
+      return dict.unwrap;
+  };
+  exports["unwrap"] = unwrap;
+  exports["wrap"] = wrap;
+  exports["Newtype"] = Newtype;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Maybe.First"] = $PS["Data.Maybe.First"] || {};
+  var exports = $PS["Data.Maybe.First"];
+  var Data_Maybe = $PS["Data.Maybe"];
+  var Data_Monoid = $PS["Data.Monoid"];
+  var Data_Newtype = $PS["Data.Newtype"];
+  var Data_Semigroup = $PS["Data.Semigroup"];      
+  var First = function (x) {
+      return x;
+  };
+  var semigroupFirst = new Data_Semigroup.Semigroup(function (v) {
+      return function (v1) {
+          if (v instanceof Data_Maybe.Just) {
+              return v;
+          };
+          return v1;
+      };
+  });                                  
+  var newtypeFirst = new Data_Newtype.Newtype(function (n) {
+      return n;
+  }, First);
+  var monoidFirst = new Data_Monoid.Monoid(function () {
+      return semigroupFirst;
+  }, Data_Maybe.Nothing.value);
+  exports["First"] = First;
+  exports["newtypeFirst"] = newtypeFirst;
+  exports["semigroupFirst"] = semigroupFirst;
+  exports["monoidFirst"] = monoidFirst;
+})(PS);
+(function(exports) {
+  "use strict";
+
+  exports.showIntImpl = function (n) {
+    return n.toString();
+  };
+})(PS["Data.Show"] = PS["Data.Show"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Show"] = $PS["Data.Show"] || {};
+  var exports = $PS["Data.Show"];
+  var $foreign = $PS["Data.Show"];
+  var Show = function (show) {
+      this.show = show;
+  };                                                 
+  var showInt = new Show($foreign.showIntImpl);
+  var show = function (dict) {
+      return dict.show;
+  };
+  exports["Show"] = Show;
+  exports["show"] = show;
+  exports["showInt"] = showInt;
+})(PS);
+(function(exports) {
+  "use strict";
+
+  // jshint maxparams: 3
+
+  exports.traverseArrayImpl = function () {
+    function array1(a) {
+      return [a];
+    }
+
+    function array2(a) {
+      return function (b) {
+        return [a, b];
+      };
+    }
+
+    function array3(a) {
+      return function (b) {
+        return function (c) {
+          return [a, b, c];
+        };
+      };
+    }
+
+    function concat2(xs) {
+      return function (ys) {
+        return xs.concat(ys);
+      };
+    }
+
+    return function (apply) {
+      return function (map) {
+        return function (pure) {
+          return function (f) {
+            return function (array) {
+              function go(bot, top) {
+                switch (top - bot) {
+                case 0: return pure([]);
+                case 1: return map(array1)(f(array[bot]));
+                case 2: return apply(map(array2)(f(array[bot])))(f(array[bot + 1]));
+                case 3: return apply(apply(map(array3)(f(array[bot])))(f(array[bot + 1])))(f(array[bot + 2]));
+                default:
+                  // This slightly tricky pivot selection aims to produce two
+                  // even-length partitions where possible.
+                  var pivot = bot + Math.floor((top - bot) / 4) * 2;
+                  return apply(map(concat2)(go(bot, pivot)))(go(pivot, top));
+                }
+              }
+              return go(0, array.length);
+            };
+          };
+        };
+      };
+    };
+  }();
+})(PS["Data.Traversable"] = PS["Data.Traversable"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Data.Traversable"] = $PS["Data.Traversable"] || {};
+  var exports = $PS["Data.Traversable"];
+  var $foreign = $PS["Data.Traversable"];
+  var Control_Applicative = $PS["Control.Applicative"];
+  var Control_Apply = $PS["Control.Apply"];
+  var Control_Category = $PS["Control.Category"];
+  var Data_Foldable = $PS["Data.Foldable"];
+  var Data_Functor = $PS["Data.Functor"];                                                      
+  var Traversable = function (Foldable1, Functor0, sequence, traverse) {
+      this.Foldable1 = Foldable1;
+      this.Functor0 = Functor0;
+      this.sequence = sequence;
+      this.traverse = traverse;
+  };
+  var traverse = function (dict) {
+      return dict.traverse;
+  }; 
+  var sequenceDefault = function (dictTraversable) {
+      return function (dictApplicative) {
+          return traverse(dictTraversable)(dictApplicative)(Control_Category.identity(Control_Category.categoryFn));
+      };
+  };
+  var traversableArray = new Traversable(function () {
+      return Data_Foldable.foldableArray;
+  }, function () {
+      return Data_Functor.functorArray;
+  }, function (dictApplicative) {
+      return sequenceDefault(traversableArray)(dictApplicative);
+  }, function (dictApplicative) {
+      return $foreign.traverseArrayImpl(Control_Apply.apply(dictApplicative.Apply0()))(Data_Functor.map((dictApplicative.Apply0()).Functor0()))(Control_Applicative.pure(dictApplicative));
+  });
+  var sequence = function (dict) {
+      return dict.sequence;
+  };
+  exports["Traversable"] = Traversable;
+  exports["traverse"] = traverse;
+  exports["sequence"] = sequence;
+  exports["sequenceDefault"] = sequenceDefault;
+  exports["traversableArray"] = traversableArray;
+})(PS);
+(function(exports) {
+  "use strict";
+
+  exports.pureE = function (a) {
+    return function () {
+      return a;
+    };
+  };
+
+  exports.bindE = function (a) {
+    return function (f) {
+      return function () {
+        return f(a())();
+      };
+    };
+  };
+})(PS["Effect"] = PS["Effect"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Effect"] = $PS["Effect"] || {};
+  var exports = $PS["Effect"];
+  var $foreign = $PS["Effect"];
+  var Control_Applicative = $PS["Control.Applicative"];
+  var Control_Apply = $PS["Control.Apply"];
+  var Control_Bind = $PS["Control.Bind"];
+  var Control_Monad = $PS["Control.Monad"];
+  var Data_Functor = $PS["Data.Functor"];                    
+  var monadEffect = new Control_Monad.Monad(function () {
+      return applicativeEffect;
+  }, function () {
+      return bindEffect;
+  });
+  var bindEffect = new Control_Bind.Bind(function () {
+      return applyEffect;
+  }, $foreign.bindE);
+  var applyEffect = new Control_Apply.Apply(function () {
+      return functorEffect;
+  }, Control_Monad.ap(monadEffect));
+  var applicativeEffect = new Control_Applicative.Applicative(function () {
+      return applyEffect;
+  }, $foreign.pureE);
+  var functorEffect = new Data_Functor.Functor(Control_Applicative.liftA1(applicativeEffect));
+  exports["functorEffect"] = functorEffect;
+  exports["applyEffect"] = applyEffect;
+  exports["applicativeEffect"] = applicativeEffect;
+  exports["bindEffect"] = bindEffect;
+  exports["monadEffect"] = monadEffect;
+})(PS);
+(function(exports) {
+  // module Flare
+  // jshint browser: true
+  // jshint node: true
+
+  "use strict";
+
+  exports.renderString = function(target) {
+    return function(content) {
+      return function() {
+        document.getElementById(target).innerHTML = content;
+      };
+    };
+  };
+
+  exports.removeChildren = function(target) {
+    return function() {
+      var el = document.getElementById(target);
+
+      // http://stackoverflow.com/a/3955238/704831
+      while (el.firstChild) {
+        el.removeChild(el.firstChild);
+      }
+    };
+  };
+
+  exports.appendComponent = function(target) {
+    return function(el) {
+      return function() {
+        document.getElementById(target).appendChild(el);
+      };
+    };
+  };
+
+  // This function maintains a global state `window.flareID` to generate unique
+  // DOM element IDs. It is only called from functions with a DOM effect.
+  function getUniqueID() {
+    if (window.flareID === undefined) {
+      window.flareID = 0;
+    }
+    window.flareID = window.flareID + 1;
+    return "flare-component-" + window.flareID.toString();
+  }
+
+  function createComponent(inputType, elementCallback, eventType, eventListener) {
+    return function(label) {
+      return function(initial) {
+        return function(send) {
+          return function() {
+            var uid = getUniqueID();
+            var el = elementCallback(initial);
+            el.className = "flare-input-" + inputType;
+            el.id = uid;
+
+            var div = document.createElement("div");
+            div.className = "flare-input";
+
+            if (label !== "") {
+              var labelEl = document.createElement("label");
+              labelEl.htmlFor = uid;
+              labelEl.appendChild(document.createTextNode(label));
+              div.appendChild(labelEl);
+            }
+
+            div.appendChild(el);
+
+            el.addEventListener(eventType, function(e) {
+              var value = eventListener(e.target, initial);
+              send(value)();
+            });
+
+            return div;
+          };
+        };
+      };
+    };
+  } 
+
+  function clamp(min, max, initial, value) {
+    if (isNaN(value)) {
+      return initial;
+    } else if (value < min) {
+      return min;
+    } else if (value > max) {
+      return max;
+    }
+    return value;
+  } 
+
+  exports.cButton = function(vPressed) {
+    return function(label) {
+      return function(vDefault) {
+        return function(send) {
+          return function() {
+            var div = document.createElement("div");
+            div.className = "flare-input";
+
+            var button = document.createElement("button");
+            button.id = getUniqueID();
+            button.className = "flare-input-button";
+            button.appendChild(document.createTextNode(label));
+
+            button.addEventListener('mousedown', function() {
+              send(vPressed)();
+            });
+            button.addEventListener('mouseup', function() {
+              send(vDefault)();
+            });
+
+            div.appendChild(button);
+            return div;
+
+          };
+        };
+      };
+    };
+  };
+
+  function padNumber(num) {
+    var str = num.toString();
+    if (str.length == 1) {
+      str = "0" + str;
+    }
+    return str;
+  }
+})(PS["Flare"] = PS["Flare"] || {});
+(function(exports) {
+  // module Signal
+
+  function make(initial) {
+    var subs = [];
+    var val = initial;
+    var sig = {
+      subscribe: function(sub) {
+        subs.push(sub);
+        sub(val);
+      },
+      get: function() { return val; },
+      set: function(newval) {
+        val = newval;
+        subs.forEach(function(sub) { sub(newval); });
+      }
+    };
+    return sig;
+  };
+
+  exports.constant = make;
+
+  exports.mapSig = function(fun) {
+    return function(sig) {
+      var out = make(fun(sig.get()));
+      sig.subscribe(function(val) { out.set(fun(val)); });
+      return out;
+    };
+  };
+
+
+  exports.applySig = function(fun) {
+    return function(sig) {
+      var out = make(fun.get()(sig.get()));
+      var produce = function() { out.set(fun.get()(sig.get())); };
+      fun.subscribe(produce);
+      sig.subscribe(produce);
+      return out;
+    };
+  };
+
+  exports.foldp = function(fun) {
+    return function(seed) {
+      return function(sig) {
+        var acc = seed;
+        var out = make(acc);
+        sig.subscribe(function(val) {
+          acc = fun(val)(acc);
+          out.set(acc);
+        });
+        return out;
+      };
+    };
+  };
+
+  exports.runSignal =
+    function runSignal(sig) {
+      return function() {
+        sig.subscribe(function(val) {
+          val();
+        });
+        return {};
+      };
+    };
+
+  exports.get = function(sig) {
+    return function() {
+      return sig.get();
+    };
+  };
+})(PS["Signal"] = PS["Signal"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Signal"] = $PS["Signal"] || {};
+  var exports = $PS["Signal"];
+  var $foreign = $PS["Signal"];
+  var Control_Applicative = $PS["Control.Applicative"];
+  var Control_Apply = $PS["Control.Apply"];
+  var Data_Functor = $PS["Data.Functor"];
+  var functorSignal = new Data_Functor.Functor($foreign.mapSig);
+  var applySignal = new Control_Apply.Apply(function () {
+      return functorSignal;
+  }, $foreign.applySig);
+  var applicativeSignal = new Control_Applicative.Applicative(function () {
+      return applySignal;
+  }, $foreign.constant);
+  exports["functorSignal"] = functorSignal;
+  exports["applySignal"] = applySignal;
+  exports["applicativeSignal"] = applicativeSignal;
+  exports["constant"] = $foreign.constant;
+  exports["foldp"] = $foreign.foldp;
+  exports["runSignal"] = $foreign.runSignal;
+})(PS);
+(function(exports) {
+  // module Signal.Channel
+
+  exports.channelP =
+    function channelP(constant) {
+      return function(v) {
+        return function() {
+          return constant(v);
+        };
+      };
+    };
+
+  exports.sendP =
+    function sendP(chan) {
+      return function(v) {
+        return function() {
+          chan.set(v);
+        };
+      };
+    };
+
+  exports.subscribe =
+    function subscribe(chan) {
+      return chan;
+    };
+})(PS["Signal.Channel"] = PS["Signal.Channel"] || {});
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Signal.Channel"] = $PS["Signal.Channel"] || {};
+  var exports = $PS["Signal.Channel"];
+  var $foreign = $PS["Signal.Channel"];
+  var Signal = $PS["Signal"];                
+  var send = $foreign.sendP;
+  var channel = $foreign.channelP(Signal.constant);
+  exports["channel"] = channel;
+  exports["send"] = send;
+  exports["subscribe"] = $foreign.subscribe;
+})(PS);
+(function($PS) {
+  // Generated by purs version 0.13.2
+  "use strict";
+  $PS["Flare"] = $PS["Flare"] || {};
+  var exports = $PS["Flare"];
+  var $foreign = $PS["Flare"];
+  var Control_Applicative = $PS["Control.Applicative"];
+  var Control_Apply = $PS["Control.Apply"];
+  var Data_Foldable = $PS["Data.Foldable"];
+  var Data_Functor = $PS["Data.Functor"];
+  var Data_Maybe = $PS["Data.Maybe"];
+  var Data_Maybe_First = $PS["Data.Maybe.First"];
+  var Data_Newtype = $PS["Data.Newtype"];
+  var Data_Semigroup = $PS["Data.Semigroup"];
+  var Data_Show = $PS["Data.Show"];
+  var Data_Traversable = $PS["Data.Traversable"];
+  var Effect = $PS["Effect"];
+  var Signal = $PS["Signal"];
+  var Signal_Channel = $PS["Signal.Channel"];                
+  var Flare = (function () {
+      function Flare(value0, value1) {
+          this.value0 = value0;
+          this.value1 = value1;
+      };
+      Flare.create = function (value0) {
+          return function (value1) {
+              return new Flare(value0, value1);
+          };
+      };
+      return Flare;
+  })();
+  var UI = function (x) {
+      return x;
+  };
+  var liftSF = function (f) {
+      return function (v) {
+          return function __do() {
+              var v1 = v();
+              return new Flare(v1.value0, f(v1.value1));
+          };
+      };
+  };
+  var functorFlare = new Data_Functor.Functor(function (f) {
+      return function (v) {
+          return new Flare(v.value0, Data_Functor.map(Signal.functorSignal)(f)(v.value1));
+      };
+  });
+  var functorUI = new Data_Functor.Functor(function (f) {
+      return function (v) {
+          return UI(Data_Functor.map(Effect.functorEffect)(Data_Functor.map(functorFlare)(f))(v));
+      };
+  });
+  var foldp = function (f) {
+      return function (x0) {
+          return liftSF(Signal.foldp(f)(x0));
+      };
+  };
+  var flareWith = function (controls) {
+      return function (handler) {
+          return function (v) {
+              return function __do() {
+                  var v1 = v();
+                  $foreign.removeChildren(controls)();
+                  Data_Foldable.traverse_(Effect.applicativeEffect)(Data_Foldable.foldableArray)($foreign.appendComponent(controls))(v1.value0)();
+                  return handler(v1.value1)();
+              };
+          };
+      };
+  };
+  var runFlareWith = function (controls) {
+      return function (handler) {
+          return function (ui) {
+              return flareWith(controls)((function () {
+                  var $128 = Data_Functor.map(Signal.functorSignal)(handler);
+                  return function ($129) {
+                      return Signal.runSignal($128($129));
+                  };
+              })())(ui);
+          };
+      };
+  };
+  var runFlare = function (controls) {
+      return function (target) {
+          return runFlareWith(controls)($foreign.renderString(target));
+      };
+  };
+  var runFlareShow = function (dictShow) {
+      return function (controls) {
+          return function (target) {
+              return function (ui) {
+                  return runFlare(controls)(target)(Data_Functor.map(functorUI)(Data_Show.show(dictShow))(ui));
+              };
+          };
+      };
+  };
+  var createUI = function (createComp) {
+      return function (label) {
+          return function ($$default) {
+              return UI(function __do() {
+                  var v = Signal_Channel.channel($$default)();
+                  var v1 = createComp(label)($$default)(Signal_Channel.send(v))();
+                  var signal = Signal_Channel.subscribe(v);
+                  return new Flare([ v1 ], signal);
+              });
+          };
+      };
+  };                     
+  var button = function (label) {
+      return function (vDefault) {
+          return function (vPressed) {
+              return createUI($foreign.cButton(vPressed))(label)(vDefault);
+          };
+      };
+  };
+  var applyFlare = new Control_Apply.Apply(function () {
+      return functorFlare;
+  }, function (v) {
+      return function (v1) {
+          return new Flare(Data_Semigroup.append(Data_Semigroup.semigroupArray)(v.value0)(v1.value0), Control_Apply.apply(Signal.applySignal)(v.value1)(v1.value1));
+      };
+  });
+  var applyUI = new Control_Apply.Apply(function () {
+      return functorUI;
+  }, function (v) {
+      return function (v1) {
+          return UI(Control_Apply.lift2(Effect.applyEffect)(Control_Apply.apply(applyFlare))(v)(v1));
+      };
+  });
+  var applicativeFlare = new Control_Applicative.Applicative(function () {
+      return applyFlare;
+  }, function (x) {
+      return new Flare([  ], Control_Applicative.pure(Signal.applicativeSignal)(x));
+  });
+  var applicativeUI = new Control_Applicative.Applicative(function () {
+      return applyUI;
+  }, function (x) {
+      return UI(Control_Applicative.pure(Effect.applicativeEffect)(Control_Applicative.pure(applicativeFlare)(x)));
+  });
+  var buttons = function (dictTraversable) {
+      return function (xs) {
+          return function (toString) {
+              var toButton = function (x) {
+                  return button(toString(x))(Data_Maybe.Nothing.value)(new Data_Maybe.Just(x));
+              };
+              return Data_Functor.map(functorUI)((function () {
+                  var $140 = Data_Newtype.unwrap(Data_Maybe_First.newtypeFirst);
+                  var $141 = Data_Foldable.foldMap(dictTraversable.Foldable1())(Data_Maybe_First.monoidFirst)(Data_Maybe_First.First);
+                  return function ($142) {
+                      return $140($141($142));
+                  };
+              })())(Data_Traversable.traverse(dictTraversable)(applicativeUI)(toButton)(xs));
+          };
+      };
+  };
+  exports["button"] = button;
+  exports["buttons"] = buttons;
+  exports["liftSF"] = liftSF;
+  exports["foldp"] = foldp;
+  exports["flareWith"] = flareWith;
+  exports["runFlareWith"] = runFlareWith;
+  exports["runFlare"] = runFlare;
+  exports["runFlareShow"] = runFlareShow;
+  exports["functorFlare"] = functorFlare;
+  exports["applyFlare"] = applyFlare;
+  exports["applicativeFlare"] = applicativeFlare;
+  exports["functorUI"] = functorUI;
+  exports["applyUI"] = applyUI;
+  exports["applicativeUI"] = applicativeUI;
+})(PS);
+(function($PS) {
+  "use strict";
+  $PS["Foldp"] = $PS["Foldp"] || {};
+  var exports = $PS["Foldp"];
+  var Data_Maybe = $PS["Data.Maybe"];
+  var Data_Show = $PS["Data.Show"];
+  var Data_Traversable = $PS["Data.Traversable"];
+  var Flare = $PS["Flare"];                
+  var Increment = (function () {
+      function Increment() {
+
+      };
+      Increment.value = new Increment();
+      return Increment;
+  })();
+  var Decrement = (function () {
+      function Decrement() {
+
+      };
+      Decrement.value = new Decrement();
+      return Decrement;
+  })();
+  var showAction = new Data_Show.Show(function (v) {
+      if (v instanceof Increment) {
+          return "+";
+      };
+      if (v instanceof Decrement) {
+          return "-";
+      };
+      throw new Error("Failed pattern match at Foldp (line 19, column 1 - line 21, column 23): " + [ v.constructor.name ]);
+  });
+  var ui = Flare.foldp(function (action) {
+      return function (x) {
+          if (action instanceof Data_Maybe.Just && action.value0 instanceof Increment) {
+              return x + 1 | 0;
+          };
+          if (action instanceof Data_Maybe.Just && action.value0 instanceof Decrement) {
+              return x - 1 | 0;
+          };
+          if (action instanceof Data_Maybe.Nothing) {
+              return x;
+          };
+          throw new Error("Failed pattern match at Foldp (line 12, column 26 - line 15, column 17): " + [ action.constructor.name ]);
+      };
+  })(0)(Flare.buttons(Data_Traversable.traversableArray)([ Increment.value, Decrement.value ])(Data_Show.show(showAction)));
+  var main = Flare.runFlareShow(Data_Show.showInt)("controls")("output")(ui);
+  exports["main"] = main;
+  exports["ui"] = ui;
+  exports["Increment"] = Increment;
+  exports["Decrement"] = Decrement;
+  exports["showAction"] = showAction;
+})(PS);
+PS["Foldp"].main();
