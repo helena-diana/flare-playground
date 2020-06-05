@@ -119,13 +119,13 @@ let additions =
 
 
 let upstream =
-      https://github.com/purescript/package-sets/releases/download/psc-0.13.2-20190804/packages.dhall sha256:2230fc547841b54bca815eb0058414aa03ed7b675042f8b3dda644e1952824e5
+      https://github.com/purescript/package-sets/releases/download/psc-0.13.6-20200507/packages.dhall sha256:9c1e8951e721b79de1de551f31ecb5a339e82bbd43300eb5ccfb1bf8cf7bbd62
 
 let overrides = {=}
 
 let additions =
-  { flare =
-      { dependencies =
+      { flare =
+        { dependencies =
           [ "smolder"
           , "foldable-traversable"
           , "nonempty"
@@ -136,24 +136,14 @@ let additions =
           , "signal"
           , "datetime"
           ]
-      , repo =
-          "https://github.com/sharkdp/purescript-flare.git"
-      , version =
-          "v5.0.0"
+        , repo = "https://github.com/sharkdp/purescript-flare.git"
+        , version = "v5.0.0"
+        }
+      , drawing =
+        { dependencies = [ "canvas", "lists", "math", "integers", "colors" ]
+        , repo = "https://github.com/paf31/purescript-drawing.git"
+        , version = "v4.0.0"
+        }
       }
-  , drawing =
-      { dependencies =
-          [ "canvas"
-          , "lists"
-          , "math"
-          , "integers"
-          , "colors"
-          ]
-      , repo =
-          "https://github.com/paf31/purescript-drawing.git"
-      , version =
-          "v4.0.0"
-      }
-  }
 
 in  upstream // overrides // additions
