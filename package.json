@@ -1,0 +1,9 @@
+{
+	"name": "flare-playground",
+	"devDependencies": {},
+	"optionalDependencies": {
+		"purescript": "^0.14.5",
+		"purs-tidy": "^0.5.4",
+		"spago": "^0.20.3"
+	}
+}
